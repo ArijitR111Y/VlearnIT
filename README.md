@@ -7,4 +7,5 @@ A forum for sharing insightful study resources helping students of VIT, Vellore,
 - Finding and following friends to view posts made by them
 - Adding comments to, liking posts
 - Messaging services 
+
 This is a live project so feel free to check out the previous commits and come back later (watch) for newer features.
