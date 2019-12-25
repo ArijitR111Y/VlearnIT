@@ -9,4 +9,14 @@
     <string name="add_new_post">Add New Post</string>
     <string name="profile">Profile</string>
     <string name="username">Username</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
+    <string name="app_icon">App Icon</string>
+    <string name="email">Email..</string>
+    <string name="password">Password..</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="create_account">Create Account</string>
+    <string name="login">login</string>
+    <string name="don_t_have_an_account">Don\'t have an Account?</string>
+    <string name="or_login_with">or Login with</string>
 </resources>
