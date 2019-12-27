@@ -16,6 +16,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginBtn;
     private TextView noAccountTextView;
     private ProgressDialog progressDialog;
+    private DatabaseReference usersRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = findViewById(R.id.loginBtn);
         noAccountTextView = findViewById(R.id.noAccountTextView);
         progressDialog = new ProgressDialog(this);
+        usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         noAccountTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +56,39 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(firebaseUser != null){
+            checkUserExistence();
+        }
+    }
+
+    private void checkUserExistence() {
+        final String currentUserId = FirebaseAuth.getInstance().getUid();
+        usersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChild(currentUserId)){
+                    sendUserToSetupActivity();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void sendUserToSetupActivity() {
+        Intent intent = new Intent(LoginActivity.this, SetupActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void loginUser() {
