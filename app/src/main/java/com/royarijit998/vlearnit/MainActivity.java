@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
@@ -21,13 +22,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
     private NavigationView mainNavigationView;
+    private CircleImageView profileImg;
+    private TextView profileUsernameTextView;
+
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout mainDrawerLayout;
     private RecyclerView userPostRecyclerView;
+    private FirebaseUser firebaseUser;
     private Toolbar mainToolbar;
     private DatabaseReference usersRef;
 
@@ -50,9 +58,14 @@ public class MainActivity extends AppCompatActivity {
         //Step -3 : Set corresponding parameter to the supportActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         userPostRecyclerView = findViewById(R.id.userPostRecyclerView);
-        mainNavigationView.inflateHeaderView(R.layout.navigation_header);
+
+        View navView = mainNavigationView.inflateHeaderView(R.layout.navigation_header);
+        profileImg = navView.findViewById(R.id.profileImg);
+        profileUsernameTextView = navView.findViewById(R.id.profileUsernameTextView);
+
 
         usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
         mainNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -62,15 +75,35 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        usersRef.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    if (dataSnapshot.hasChild("fullname")) {
+                        String fname = dataSnapshot.child("fullname").getValue().toString();
+                        profileUsernameTextView.setText(fname);
+                    }
+                    if (dataSnapshot.hasChild("profileImg")) {
+                        String imagePath = dataSnapshot.child("profileImg").getValue().toString();
+                        Picasso.get().load(imagePath).placeholder(R.drawable.profile).into(profileImg);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(firebaseUser == null){
-            sendUserToLoginActivity();
-        }else{
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(firebaseUser != null){
             checkUserExistence();
         }
     }

@@ -74,6 +74,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild(currentUserId)){
                     sendUserToSetupActivity();
+                }else{
+                    sendUserToHomeActivity();
                 }
             }
 
