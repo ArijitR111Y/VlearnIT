@@ -19,4 +19,6 @@
     <string name="login">login</string>
     <string name="don_t_have_an_account">Don\'t have an Account?</string>
     <string name="or_login_with">or Login with</string>
+    <string name="update_post">Update Post</string>
+    <string name="post_something_new_here">Post something new here...</string>
 </resources>

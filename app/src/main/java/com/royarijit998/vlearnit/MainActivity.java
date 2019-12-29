@@ -139,6 +139,11 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    private void sendUserToPostActivity() {
+        Intent intent = new Intent(MainActivity.this, PostActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(actionBarDrawerToggle.onOptionsItemSelected(item)){
@@ -151,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (menuItem.getItemId()){
             case R.id.navPost:
-                Toast.makeText(getApplicationContext(), "Create new post", Toast.LENGTH_SHORT).show();
+                sendUserToPostActivity();
                 break;
             case R.id.navHome:
                 Toast.makeText(getApplicationContext(), "Open Home", Toast.LENGTH_SHORT).show();
@@ -179,4 +184,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
 }
