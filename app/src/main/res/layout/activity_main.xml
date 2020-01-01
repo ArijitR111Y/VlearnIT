@@ -21,10 +21,8 @@
         <FrameLayout
             android:id="@+id/mainContainerFrameLayout"
             android:layout_width="match_parent"
-            android:layout_height="676dp"
-            android:layout_below="@id/mainToolbar"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true">
+            android:layout_height="601dp"
+            android:layout_below="@id/mainToolbar">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/userPostRecyclerView"

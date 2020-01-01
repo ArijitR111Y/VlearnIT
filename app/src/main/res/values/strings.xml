@@ -21,4 +21,10 @@
     <string name="or_login_with">or Login with</string>
     <string name="update_post">Update Post</string>
     <string name="post_something_new_here">Post something new here...</string>
+    <string name="post_description">Post Description....</string>
+    <string name="time">Time</string>
+    <string name="user_s_full_name">User\'s Full Name</string>
+    <string name="has_updated_a_post_on">has updated a post on</string>
+    <string name="date">Date</string>
+    <string name="at"> at </string>
 </resources>

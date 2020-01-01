@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -34,10 +36,18 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout mainDrawerLayout;
+
     private RecyclerView userPostRecyclerView;
+    private LinearLayoutManager linearLayoutManager;
+    private RecyclerView.Adapter postsListAdapter;
+
     private FirebaseUser firebaseUser;
     private Toolbar mainToolbar;
+
+    private DatabaseReference postsRef;
     private DatabaseReference usersRef;
+
+    private ArrayList<Posts> postsArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +67,30 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
         //Step -3 : Set corresponding parameter to the supportActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        postsArrayList = new ArrayList<>();
+
+        retrieveAllUsersPosts();
+
         userPostRecyclerView = findViewById(R.id.userPostRecyclerView);
+        userPostRecyclerView.setNestedScrollingEnabled(false);
+        userPostRecyclerView.setHasFixedSize(false);
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        userPostRecyclerView.setLayoutManager(linearLayoutManager);
+        postsListAdapter = new PostListAdapter(postsArrayList);
+        userPostRecyclerView.setAdapter(postsListAdapter);
+
 
         View navView = mainNavigationView.inflateHeaderView(R.layout.navigation_header);
         profileImg = navView.findViewById(R.id.profileImg);
         profileUsernameTextView = navView.findViewById(R.id.profileUsernameTextView);
-
-
-        usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
+        
 
         mainNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -88,6 +112,45 @@ public class MainActivity extends AppCompatActivity {
                     if (dataSnapshot.hasChild("profileImg")) {
                         String imagePath = dataSnapshot.child("profileImg").getValue().toString();
                         Picasso.get().load(imagePath).placeholder(R.drawable.profile).into(profileImg);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    private void retrieveAllUsersPosts() {
+        postsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+
+                        String uid = "", date = "", time = "", description = "", postImg = "", ufullname = "", uprofileImg = "";
+
+                        if(childSnapshot.child("uid").getValue() != null)
+                            uid = childSnapshot.child("uid").getValue().toString();
+                        if(childSnapshot.child("date").getValue() != null)
+                            date = childSnapshot.child("date").getValue().toString();
+                        if(childSnapshot.child("time").getValue() != null)
+                            time = childSnapshot.child("time").getValue().toString();
+                        if(childSnapshot.child("description").getValue() != null)
+                            description = childSnapshot.child("description").getValue().toString();
+                        if(childSnapshot.child("postImg").getValue() != null)
+                            postImg = childSnapshot.child("postImg").getValue().toString();
+                        if(childSnapshot.child("ufullname").getValue() != null)
+                            ufullname = childSnapshot.child("ufullname").getValue().toString();
+                        if(childSnapshot.child("uprofileImg").getValue() != null)
+                            uprofileImg = childSnapshot.child("uprofileImg").getValue().toString();
+
+                        Posts post = new Posts(uid, date, time, description, postImg, ufullname, uprofileImg);
+                        postsArrayList.add(post);
+                        postsListAdapter.notifyDataSetChanged();
                     }
                 }
             }
