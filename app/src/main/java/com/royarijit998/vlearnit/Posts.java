@@ -1,11 +1,12 @@
 package com.royarijit998.vlearnit;
 
 public class Posts {
-    public String uid, date, time, description, postImg, ufullname, uprofileImg;
+    public String key, uid, date, time, description, postImg, ufullname, uprofileImg;
 
     public Posts(){}
 
-    public Posts(String uid, String date, String time, String description, String postImg, String ufullname, String uprofileImg) {
+    public Posts(String key, String uid, String date, String time, String description, String postImg, String ufullname, String uprofileImg) {
+        this.key = key;
         this.uid = uid;
         this.date = date;
         this.time = time;
@@ -13,6 +14,14 @@ public class Posts {
         this.postImg = postImg;
         this.ufullname = ufullname;
         this.uprofileImg = uprofileImg;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getUid() {

@@ -148,7 +148,9 @@ public class MainActivity extends AppCompatActivity {
                         if(childSnapshot.child("uprofileImg").getValue() != null)
                             uprofileImg = childSnapshot.child("uprofileImg").getValue().toString();
 
-                        Posts post = new Posts(uid, date, time, description, postImg, ufullname, uprofileImg);
+                        String postKey = childSnapshot.getKey();
+
+                        Posts post = new Posts(postKey, uid, date, time, description, postImg, ufullname, uprofileImg);
                         postsArrayList.add(post);
                         postsListAdapter.notifyDataSetChanged();
                     }

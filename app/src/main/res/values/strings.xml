@@ -27,4 +27,5 @@
     <string name="has_updated_a_post_on">has updated a post on</string>
     <string name="date">Date</string>
     <string name="at"> at </string>
+    <string name="delete_post">Delete Post</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.royarijit998.vlearnit;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PostViewHolder holder, final int position) {
         // TextViews
         holder.postUserTextView.setText(postsArrayList.get(position).getUfullname());
         holder.postDateTextView.setText(postsArrayList.get(position).getDate());
@@ -40,6 +41,16 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostVi
         // ImageViews
         Picasso.get().load(postsArrayList.get(position).getPostImg()).placeholder(R.drawable.profile).into(holder.postImageView);
         Picasso.get().load(postsArrayList.get(position).getUprofileImg()).placeholder(R.drawable.profile).into(holder.postProfileImageView);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ClickPostActivity.class);
+                intent.putExtra("postKey", postsArrayList.get(position).getKey());
+                v.getContext().startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -60,7 +71,7 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostVi
             postUserTextView = itemView.findViewById(R.id.postUserTextView);
             postDateTextView = itemView.findViewById(R.id.postDateTextView);
             postTimeTextView = itemView.findViewById(R.id.postTimeTextView);
-            postDescTextView = itemView.findViewById(R.id.postDescTextView);
+            postDescTextView = itemView.findViewById(R.id.postClickDescTextView);
 
         }
     }
