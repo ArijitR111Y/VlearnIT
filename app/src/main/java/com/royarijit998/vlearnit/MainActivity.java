@@ -131,6 +131,13 @@ public class MainActivity extends AppCompatActivity {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
 
+                        for(Posts posts : postsArrayList){
+                            if(posts.getKey().equals(childSnapshot.getKey())){
+                                postsArrayList.remove(posts);
+                                break;
+                            }
+                        }
+
                         String uid = "", date = "", time = "", description = "", postImg = "", ufullname = "", uprofileImg = "";
 
                         if(childSnapshot.child("uid").getValue() != null)
