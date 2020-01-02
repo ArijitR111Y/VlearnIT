@@ -212,13 +212,13 @@ public class PostActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home){
             sendUserToMainActivity();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void sendUserToMainActivity() {
         Intent intent = new Intent(PostActivity.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
