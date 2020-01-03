@@ -216,6 +216,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void sendUserToProfileActivity() {
+        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
     private void sendUserToSettingsActivity() {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
@@ -239,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Open Home", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.navProfile:
-                Toast.makeText(getApplicationContext(), "Open Profile", Toast.LENGTH_SHORT).show();
+                sendUserToProfileActivity();
                 break;
             case R.id.navFriends:
                 Toast.makeText(getApplicationContext(), "See Friends", Toast.LENGTH_SHORT).show();

@@ -35,4 +35,5 @@
     <string name="male_or_female">Male or Female</string>
     <string name="programming_level">Programming Level</string>
     <string name="update_user_settings">Update User Settings</string>
+    <string name="profile_name">Profile Name</string>
 </resources>
