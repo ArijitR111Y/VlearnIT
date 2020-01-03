@@ -216,6 +216,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void sendUserToSettingsActivity() {
+        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(actionBarDrawerToggle.onOptionsItemSelected(item)){
@@ -246,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Create new msg", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.navSettings:
-                Toast.makeText(getApplicationContext(), "Open Settings", Toast.LENGTH_SHORT).show();
+                sendUserToSettingsActivity();
                 break;
             case R.id.navLogout:
                 Toast.makeText(getApplicationContext(), "Logged out from App", Toast.LENGTH_SHORT).show();

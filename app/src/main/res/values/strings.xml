@@ -28,4 +28,11 @@
     <string name="date">Date</string>
     <string name="at"> at </string>
     <string name="delete_post">Delete Post</string>
+    <string name="profile_status">Profile Status...</string>
+    <string name="full_name">Full Name</string>
+    <string name="country">Country</string>
+    <string name="date_of_birth_as_dd_mmmm_yy">Date of Birth (as dd-MMMM-YY)</string>
+    <string name="male_or_female">Male or Female</string>
+    <string name="programming_level">Programming Level</string>
+    <string name="update_user_settings">Update User Settings</string>
 </resources>
