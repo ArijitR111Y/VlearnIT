@@ -226,6 +226,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void sendUserToFindFriendsActivity() {
+        Intent intent = new Intent(MainActivity.this, FindFriendsActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(actionBarDrawerToggle.onOptionsItemSelected(item)){
@@ -250,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "See Friends", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.navFindFriends:
-                Toast.makeText(getApplicationContext(), "Find Friends", Toast.LENGTH_SHORT).show();
+                sendUserToFindFriendsActivity();
                 break;
             case R.id.navMessage:
                 Toast.makeText(getApplicationContext(), "Create new msg", Toast.LENGTH_SHORT).show();
