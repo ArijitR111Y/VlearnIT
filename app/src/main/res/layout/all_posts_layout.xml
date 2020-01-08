@@ -107,6 +107,38 @@
             android:scaleType="centerCrop"
             />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:background="@color/colorMainBackground"
+            >
+
+
+            <ImageButton
+                android:id="@+id/likeImageBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dislike"/>
+
+            <TextView
+                android:id="@+id/numLikesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 likes"
+                android:padding="15dp"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <ImageButton
+                android:id="@+id/commentImageBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/comment"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

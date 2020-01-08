@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference postsRef;
     private DatabaseReference usersRef;
+    private DatabaseReference likesRef;
 
     private ArrayList<Posts> postsArrayList;
 
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        likesRef = FirebaseDatabase.getInstance().getReference().child("Likes");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         postsArrayList = new ArrayList<>();
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         userPostRecyclerView.setLayoutManager(linearLayoutManager);
-        postsListAdapter = new PostListAdapter(postsArrayList);
+        postsListAdapter = new PostListAdapter(likesRef, firebaseUser, postsArrayList);
         userPostRecyclerView.setAdapter(postsListAdapter);
 
 

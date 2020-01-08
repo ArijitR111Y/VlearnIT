@@ -4,12 +4,18 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -17,9 +23,13 @@ import java.util.ArrayList;
 public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostViewHolder> {
 
     private ArrayList<Posts> postsArrayList;
+    private DatabaseReference likesRef;
+    private FirebaseUser firebaseUser;
 
-    public PostListAdapter(ArrayList<Posts> postsArrayList) {
+    public PostListAdapter(DatabaseReference likesRef, FirebaseUser firebaseUser, ArrayList<Posts> postsArrayList) {
         this.postsArrayList = postsArrayList;
+        this.likesRef = likesRef;
+        this.firebaseUser = firebaseUser;
     }
 
     @NonNull
@@ -31,7 +41,10 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final PostViewHolder holder, final int position) {
+
+        final String postKey = postsArrayList.get(position).getKey();
+
         // TextViews
         holder.postUserTextView.setText(postsArrayList.get(position).getUfullname());
         holder.postDateTextView.setText(postsArrayList.get(position).getDate());
@@ -46,9 +59,47 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostVi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ClickPostActivity.class);
-                intent.putExtra("postKey", postsArrayList.get(position).getKey());
+                intent.putExtra("postKey", postKey);
                 v.getContext().startActivity(intent);
 
+            }
+        });
+
+        likesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                holder.numLikesTextView.setText(dataSnapshot.child(postKey).getChildrenCount()+" likes");
+                if (dataSnapshot.child(postKey).hasChild(firebaseUser.getUid())) {
+                    holder.likeImageBtn.setImageResource(R.drawable.like);
+                } else {
+                    holder.likeImageBtn.setImageResource(R.drawable.dislike);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        holder.likeImageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                likesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.child(postKey).hasChild(firebaseUser.getUid())){
+                            likesRef.child(postKey).child(firebaseUser.getUid()).removeValue();
+                        }else{
+                            likesRef.child(postKey).child(firebaseUser.getUid()).setValue(true);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
     }
@@ -61,6 +112,8 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostVi
     public class PostViewHolder extends RecyclerView.ViewHolder{
         private ImageView postImageView, postProfileImageView;
         private TextView postUserTextView, postDateTextView, postTimeTextView, postDescTextView;
+        private ImageButton likeImageBtn, commentImageBtn;
+        private TextView numLikesTextView;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,10 +121,14 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostVi
             postImageView = itemView.findViewById(R.id.postImageView);
             postProfileImageView = itemView.findViewById(R.id.postProfileImageView);
 
+            likeImageBtn = itemView.findViewById(R.id.likeImageBtn);
+            commentImageBtn = itemView.findViewById(R.id.commentImageBtn);
+
             postUserTextView = itemView.findViewById(R.id.postUserTextView);
             postDateTextView = itemView.findViewById(R.id.postDateTextView);
             postTimeTextView = itemView.findViewById(R.id.postTimeTextView);
             postDescTextView = itemView.findViewById(R.id.postClickDescTextView);
+            numLikesTextView = itemView.findViewById(R.id.numLikesTextView);
 
         }
     }
