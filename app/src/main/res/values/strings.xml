@@ -36,4 +36,7 @@
     <string name="programming_level">Programming Level</string>
     <string name="update_user_settings">Update User Settings</string>
     <string name="profile_name">Profile Name</string>
+    <string name="comments">Comments:</string>
+    <string name="add_a_comment_here">Add a comment here...</string>
+    <string name="plus_sign">+</string>
 </resources>

@@ -5,15 +5,13 @@ public class Posts {
 
     public Posts(){}
 
-    public Posts(String key, String uid, String date, String time, String description, String postImg, String ufullname, String uprofileImg) {
+    public Posts(String key, String uid, String date, String time, String description, String postImg) {
         this.key = key;
         this.uid = uid;
         this.date = date;
         this.time = time;
         this.description = description;
         this.postImg = postImg;
-        this.ufullname = ufullname;
-        this.uprofileImg = uprofileImg;
     }
 
     public String getKey() {

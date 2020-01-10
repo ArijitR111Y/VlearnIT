@@ -172,8 +172,6 @@ public class PostActivity extends AppCompatActivity {
                     postMap.put("time", currTime);
                     postMap.put("description", postDescription);
                     postMap.put("postImg", downloadUrl);
-                    postMap.put("ufullname", userFullName);
-                    postMap.put("uprofileImg", userProfileImage);
 
                     postRef.child(currUserRef.getUid() + randomKey).updateChildren(postMap).addOnCompleteListener(new OnCompleteListener() {
                         @Override

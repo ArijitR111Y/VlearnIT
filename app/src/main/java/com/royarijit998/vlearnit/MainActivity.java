@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         userPostRecyclerView.setLayoutManager(linearLayoutManager);
-        postsListAdapter = new PostListAdapter(likesRef, firebaseUser, postsArrayList);
+        postsListAdapter = new PostListAdapter(usersRef, likesRef, firebaseUser, postsArrayList);
         userPostRecyclerView.setAdapter(postsListAdapter);
 
 
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
 
-                        String uid = "", date = "", time = "", description = "", postImg = "", ufullname = "", uprofileImg = "";
+                        String uid = "", date = "", time = "", description = "", postImg = "";
 
                         if(childSnapshot.child("uid").getValue() != null)
                             uid = childSnapshot.child("uid").getValue().toString();
@@ -152,14 +152,9 @@ public class MainActivity extends AppCompatActivity {
                             description = childSnapshot.child("description").getValue().toString();
                         if(childSnapshot.child("postImg").getValue() != null)
                             postImg = childSnapshot.child("postImg").getValue().toString();
-                        if(childSnapshot.child("ufullname").getValue() != null)
-                            ufullname = childSnapshot.child("ufullname").getValue().toString();
-                        if(childSnapshot.child("uprofileImg").getValue() != null)
-                            uprofileImg = childSnapshot.child("uprofileImg").getValue().toString();
 
                         String postKey = childSnapshot.getKey();
-
-                        Posts post = new Posts(postKey, uid, date, time, description, postImg, ufullname, uprofileImg);
+                        Posts post = new Posts(postKey, uid, date, time, description, postImg);
                         postsArrayList.add(post);
                         postsListAdapter.notifyDataSetChanged();
                     }

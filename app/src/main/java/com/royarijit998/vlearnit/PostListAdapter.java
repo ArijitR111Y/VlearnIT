@@ -24,9 +24,11 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostVi
 
     private ArrayList<Posts> postsArrayList;
     private DatabaseReference likesRef;
+    private DatabaseReference usersRef;
     private FirebaseUser firebaseUser;
 
-    public PostListAdapter(DatabaseReference likesRef, FirebaseUser firebaseUser, ArrayList<Posts> postsArrayList) {
+    public PostListAdapter(DatabaseReference usersRef, DatabaseReference likesRef, FirebaseUser firebaseUser, ArrayList<Posts> postsArrayList) {
+        this.usersRef = usersRef;
         this.postsArrayList = postsArrayList;
         this.likesRef = likesRef;
         this.firebaseUser = firebaseUser;
@@ -46,14 +48,12 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostVi
         final String postKey = postsArrayList.get(position).getKey();
 
         // TextViews
-        holder.postUserTextView.setText(postsArrayList.get(position).getUfullname());
         holder.postDateTextView.setText(postsArrayList.get(position).getDate());
         holder.postTimeTextView.setText(postsArrayList.get(position).getTime());
         holder.postDescTextView.setText(postsArrayList.get(position).getDescription());
 
         // ImageViews
         Picasso.get().load(postsArrayList.get(position).getPostImg()).placeholder(R.drawable.profile).into(holder.postImageView);
-        Picasso.get().load(postsArrayList.get(position).getUprofileImg()).placeholder(R.drawable.profile).into(holder.postProfileImageView);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +82,23 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostVi
             }
         });
 
+        usersRef.child(postsArrayList.get(position).getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    String userName = dataSnapshot.child("fullname").getValue().toString();
+                    String userProfileImg = dataSnapshot.child("profileImg").getValue().toString();
+
+                    holder.postUserTextView.setText(userName);
+                    Picasso.get().load(userProfileImg).placeholder(R.drawable.profile).into(holder.postProfileImageView);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+
         holder.likeImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +117,15 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostVi
 
                     }
                 });
+            }
+        });
+
+        holder.commentImageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), CommentsActivity.class);
+                intent.putExtra("postKey", postKey);
+                v.getContext().startActivity(intent);
             }
         });
     }
