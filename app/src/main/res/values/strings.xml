@@ -39,4 +39,5 @@
     <string name="comments">Comments:</string>
     <string name="add_a_comment_here">Add a comment here...</string>
     <string name="plus_sign">+</string>
+    <string name="comment_will_be_displayed_here">Comment will be displayed here...</string>
 </resources>
