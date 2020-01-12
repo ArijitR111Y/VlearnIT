@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailLoginEditText, passLoginEditText;
     private Button loginBtn;
     private TextView noAccountTextView;
+    private TextView forgotPasswordTextView;
     private ProgressDialog progressDialog;
     private DatabaseReference usersRef;
 
@@ -65,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         twitterSigninBtn = findViewById(R.id.twitterSigninBtn);
         googleSigninBtn = findViewById(R.id.googleSigninBtn);
         noAccountTextView = findViewById(R.id.noAccountTextView);
+        forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView);
         progressDialog = new ProgressDialog(this);
         usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -73,6 +75,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendUserToRegisterActivity();
+            }
+        });
+
+        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendUserToResetPasswordActivity();
             }
         });
 
@@ -237,6 +246,11 @@ public class LoginActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
+    }
+
+    private void sendUserToResetPasswordActivity() {
+        Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+        startActivity(intent);
     }
 
 }

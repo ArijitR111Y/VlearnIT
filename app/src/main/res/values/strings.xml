@@ -40,4 +40,8 @@
     <string name="add_a_comment_here">Add a comment here...</string>
     <string name="plus_sign">+</string>
     <string name="comment_will_be_displayed_here">Comment will be displayed here...</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="recover_text">Click on the link to recover your account on your registered email. \n Enter your registered email here..</string>
+    <string name="registered_email">Registered Email</string>
+    <string name="recover_your_account">Recover your account</string>
 </resources>
