@@ -254,9 +254,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navFindFriends:
                 sendUserToFindFriendsActivity();
                 break;
-            case R.id.navMessage:
-                Toast.makeText(getApplicationContext(), "Create new msg", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.navSettings:
                 sendUserToSettingsActivity();
                 break;

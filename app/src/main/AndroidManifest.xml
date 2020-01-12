@@ -15,8 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ResetPasswordActivity"
-            android:parentActivityName=".LoginActivity"/>
+        <activity android:name=".PersonProfileActivity"></activity>
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:parentActivityName=".LoginActivity" />
         <activity android:name=".CommentsActivity" />
         <activity
             android:name=".FindFriendsActivity"

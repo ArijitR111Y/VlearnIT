@@ -1,6 +1,7 @@
 package com.royarijit998.vlearnit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         holder.allUsersView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PersonProfileActivity.class);
+                intent.putExtra("userId", usersArrayList.get(position).getUserId());
+                v.getContext().startActivity(intent);
                 Toast.makeText(context.getApplicationContext(), "User: " + usersArrayList.get(position).getUserFullName(), Toast.LENGTH_SHORT).show();
             }
         });

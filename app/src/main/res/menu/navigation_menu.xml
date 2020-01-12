@@ -22,10 +22,6 @@
         android:title="@string/find_friends"
         android:icon="@drawable/find_people"/>
     <item
-        android:id="@+id/navMessage"
-        android:title="@string/message"
-        android:icon="@drawable/messages"/>
-    <item
         android:id="@+id/navSettings"
         android:title="@string/settings"
         android:icon="@drawable/settings"/>

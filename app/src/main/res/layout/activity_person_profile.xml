@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PersonProfileActivity"
+    android:background="@color/colorProfile">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/personProfileImageView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/profile"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/personProfileFullnameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/personProfileImageView"
+                android:layout_marginTop="10dp"
+                android:text="@string/profile_name"
+                android:textAlignment="center"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/personProfileUsernameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/personProfileFullnameTextView"
+                android:layout_marginTop="10dp"
+                android:text="@string/username"
+                android:textAlignment="center"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/personProfileStatusTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/personProfileUsernameTextView"
+                android:layout_marginTop="10dp"
+                android:text="@string/profile_status"
+                android:textAlignment="center"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="19sp" />
+
+
+            <TextView
+                android:id="@+id/personProfileCountryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/personProfileStatusTextView"
+                android:layout_marginTop="50dp"
+                android:text="@string/country"
+                android:textAlignment="center"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="18sp"/>
+
+
+            <TextView
+                android:id="@+id/personProfileDobTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/personProfileCountryTextView"
+                android:layout_marginTop="10dp"
+                android:text="@string/date_of_birth_as_dd_mmmm_yy"
+                android:textAlignment="center"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/personProfileLevelTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/personProfileDobTextView"
+                android:layout_marginTop="10dp"
+                android:text="@string/programming_level"
+                android:textAlignment="center"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="18sp"/>
+
+            <Button
+                android:id="@+id/sendFriendRequestBtn"
+                android:layout_below="@+id/personProfileLevelTextView"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Send Friend Request"
+                android:textColor="@android:color/white"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorPrimaryDark"/>
+
+            <Button
+                android:id="@+id/declineFriendRequestBtn"
+                android:layout_below="@+id/sendFriendRequestBtn"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Delete Friend Request"
+                android:textColor="@android:color/white"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorPrimary"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
