@@ -67,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
         googleSigninBtn = findViewById(R.id.googleSigninBtn);
         noAccountTextView = findViewById(R.id.noAccountTextView);
         forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView);
-        progressDialog = new ProgressDialog(this);
         usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth = FirebaseAuth.getInstance();
 
@@ -118,8 +117,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        progressDialog = new ProgressDialog(this);
         if(firebaseUser != null){
-            checkUserExistence();
+            progressDialog.setTitle("Login Verified");
+            progressDialog.setMessage("Logging the user in...");
+            progressDialog.show();
+            progressDialog.setCanceledOnTouchOutside(true);
+            checkUserExistence(firebaseUser.getUid());
         }
     }
 
@@ -174,9 +178,8 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void checkUserExistence() {
-        final String currentUserId = FirebaseAuth.getInstance().getUid();
-        usersRef.addValueEventListener(new ValueEventListener() {
+    private void checkUserExistence(final String currentUserId) {
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild(currentUserId)){
@@ -184,6 +187,7 @@ public class LoginActivity extends AppCompatActivity {
                 }else{
                     sendUserToHomeActivity();
                 }
+                progressDialog.dismiss();
             }
 
             @Override
