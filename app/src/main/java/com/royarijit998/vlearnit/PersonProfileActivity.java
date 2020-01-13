@@ -71,15 +71,40 @@ public class PersonProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    String profileImg = dataSnapshot.child("profileImg").getValue().toString();
-                    String status = dataSnapshot.child("status").getValue().toString();
-                    String username = dataSnapshot.child("username").getValue().toString();
-                    String fullname = dataSnapshot.child("fullname").getValue().toString();
-                    String country = dataSnapshot.child("country").getValue().toString();
-                    String dob = dataSnapshot.child("dob").getValue().toString();
-                    String level = dataSnapshot.child("level").getValue().toString();
+                    String profileImg = "";
+                    String status = "";
+                    String username = "";
+                    String fullname = "";
+                    String country = "";
+                    String dob = "";
+                    String level = "";
 
-                    Picasso.get().load(profileImg).placeholder(R.drawable.profile).into(personProfileImageView);
+                    if(dataSnapshot.child("profileImg").getValue() != null){
+                        profileImg = dataSnapshot.child("profileImg").getValue().toString();
+                    }
+                    if(dataSnapshot.child("status").getValue() != null){
+                        status = dataSnapshot.child("status").getValue().toString();
+                    }
+                    if(dataSnapshot.child("username").getValue() != null){
+                        username = dataSnapshot.child("username").getValue().toString();
+                    }
+                    if(dataSnapshot.child("fullname").getValue() != null){
+                        fullname = dataSnapshot.child("fullname").getValue().toString();
+                    }
+                    if(dataSnapshot.child("country").getValue() != null){
+                        country = dataSnapshot.child("country").getValue().toString();
+                    }
+                    if(dataSnapshot.child("dob").getValue() != null){
+                        dob = dataSnapshot.child("dob").getValue().toString();
+                    }
+                    if(dataSnapshot.child("level").getValue() != null){
+                        level = dataSnapshot.child("level").getValue().toString();
+                    }
+
+                    if(!profileImg.isEmpty())
+                        Picasso.get().load(profileImg).placeholder(R.drawable.profile).into(personProfileImageView);
+                    else
+                        personProfileImageView.setImageResource(R.drawable.profile);
                     personProfileStatusTextView.setText(status);
                     personProfileUsernameTextView.setText("@" + username);
                     personProfileFullnameTextView.setText(fullname);

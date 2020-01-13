@@ -163,9 +163,6 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    String userFullName = dataSnapshot.child("fullname").getValue().toString();
-                    String userProfileImage = dataSnapshot.child("profileImg").getValue().toString();
-
                     HashMap postMap = new HashMap();
                     postMap.put("uid", currUserRef.getUid());
                     postMap.put("date", currDate);

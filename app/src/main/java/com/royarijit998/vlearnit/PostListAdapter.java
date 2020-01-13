@@ -87,10 +87,14 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostVi
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     String userName = dataSnapshot.child("fullname").getValue().toString();
-                    String userProfileImg = dataSnapshot.child("profileImg").getValue().toString();
+                    String userProfileImg = "";
+                    if(dataSnapshot.child("profileImg").getValue() != null){
+                        userProfileImg = dataSnapshot.child("profileImg").getValue().toString();
+                    }
 
                     holder.postUserTextView.setText(userName);
-                    Picasso.get().load(userProfileImg).placeholder(R.drawable.profile).into(holder.postProfileImageView);
+                    if(!userProfileImg.isEmpty())
+                        Picasso.get().load(userProfileImg).placeholder(R.drawable.profile).into(holder.postProfileImageView);
 
                 }
             }

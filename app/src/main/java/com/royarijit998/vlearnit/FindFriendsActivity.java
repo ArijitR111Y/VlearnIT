@@ -91,10 +91,24 @@ public class FindFriendsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
+                        String profileImg = "";
+                        String fullname = "";
+                        String status = "";
+
+                        if(childSnapshot.child("profileImg").exists()){
+                            profileImg = childSnapshot.child("profileImg").getValue().toString();
+                        }
+                        if(childSnapshot.child("fullname").exists()){
+                            fullname = childSnapshot.child("fullname").getValue().toString();
+                        }
+                        if(childSnapshot.child("status").exists()){
+                            status = childSnapshot.child("status").getValue().toString();
+                        }
+
                         Users user = new Users(childSnapshot.getKey(),
-                                childSnapshot.child("profileImg").getValue().toString(),
-                                childSnapshot.child("fullname").getValue().toString(),
-                                childSnapshot.child("status").getValue().toString());
+                                profileImg,
+                                fullname,
+                                status);
 
                         usersArrayList.add(user);
                     }

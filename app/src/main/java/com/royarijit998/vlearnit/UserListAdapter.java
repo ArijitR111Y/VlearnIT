@@ -38,8 +38,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     public void onBindViewHolder(@NonNull final UserViewHolder holder, final int position) {
         holder.allUsersFnameTextView.setText(usersArrayList.get(position).getUserFullName());
         holder.allUsersStatusTextView.setText(usersArrayList.get(position).getUserStatus());
-        Picasso.get().load(usersArrayList.get(position).getUserProfileImg()).placeholder(R.drawable.profile).into(holder.allUsersProfileImageView);
-        
+        if(!usersArrayList.get(position).getUserProfileImg().isEmpty())
+            Picasso.get().load(usersArrayList.get(position).getUserProfileImg()).placeholder(R.drawable.profile).into(holder.allUsersProfileImageView);
+        else
+            holder.allUsersProfileImageView.setImageResource(R.drawable.profile);
+
         holder.allUsersView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
