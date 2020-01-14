@@ -82,10 +82,14 @@ public class FriendsActivity extends AppCompatActivity {
         friendReqsRef.child(currUserId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                friendReqsArrayList.clear();
+                friendReqsListAdapter.notifyDataSetChanged();
                 if(dataSnapshot.exists()){
                     for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
-                        friendReqsArrayList.add(childSnapshot.getKey());
-                        friendReqsListAdapter.notifyDataSetChanged();
+                        if(childSnapshot.child("request_type").getValue().toString().equals("received")) {
+                            friendReqsArrayList.add(childSnapshot.getKey());
+                            friendReqsListAdapter.notifyDataSetChanged();
+                        }
                     }
                 }
             }
@@ -99,6 +103,8 @@ public class FriendsActivity extends AppCompatActivity {
         friendsRef.child(currUserId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                friendsArrayList.clear();
+                friendsListAdapter.notifyDataSetChanged();
                 if(dataSnapshot.exists()){
                     for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
                         friendsArrayList.add(childSnapshot.getKey());
