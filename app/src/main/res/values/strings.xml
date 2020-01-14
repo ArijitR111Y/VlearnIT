@@ -44,4 +44,6 @@
     <string name="recover_text">Click on the link to recover your account on your registered email. \n Enter your registered email here..</string>
     <string name="registered_email">Registered Email</string>
     <string name="recover_your_account">Recover your account</string>
+    <string name="friend_requests">Friend Requests</string>
+    <string name="no_more_requests_to_show">No more requests to show</string>
 </resources>

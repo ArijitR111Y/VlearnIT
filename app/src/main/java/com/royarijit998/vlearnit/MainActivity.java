@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
-
                         for(Posts posts : postsArrayList){
                             if(posts.getKey().equals(childSnapshot.getKey())){
                                 postsArrayList.remove(posts);
@@ -213,6 +212,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void sendUserToFriendsActivity() {
+        Intent intent = new Intent(MainActivity.this, FriendsActivity.class);
+        startActivity(intent);
+    }
+
     private void sendUserToProfileActivity() {
         Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
         startActivity(intent);
@@ -249,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
                 sendUserToProfileActivity();
                 break;
             case R.id.navFriends:
-                Toast.makeText(getApplicationContext(), "See Friends", Toast.LENGTH_SHORT).show();
+                sendUserToFriendsActivity();
                 break;
             case R.id.navFindFriends:
                 sendUserToFindFriendsActivity();
