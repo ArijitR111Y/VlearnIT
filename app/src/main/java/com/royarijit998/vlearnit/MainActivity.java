@@ -130,15 +130,10 @@ public class MainActivity extends AppCompatActivity {
         postsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                postsArrayList.clear();
+                postsListAdapter.notifyDataSetChanged();
                 if(dataSnapshot.exists()){
                     for(DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
-                        for(Posts posts : postsArrayList){
-                            if(posts.getKey().equals(childSnapshot.getKey())){
-                                postsArrayList.remove(posts);
-                                break;
-                            }
-                        }
-
                         String uid = "", date = "", time = "", description = "", postImg = "";
 
                         if(childSnapshot.child("uid").getValue() != null)
